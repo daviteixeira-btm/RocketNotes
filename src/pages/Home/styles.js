@@ -17,13 +17,30 @@ export const Container = styled.div`
 `;
 
 export const Brand = styled.div`
+    display: flex;
     grid-area: brand;
-    background: red;
+    align-items: center;
+    justify-content: center;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+    border-bottom-color: ${({ theme }) => theme.COLORS.BACKGROUND_700};
+
+    > h1 {
+        font-size: 24px;
+        color: ${({ theme }) => theme.COLORS.ORANGE};
+    }
 `;
 
 export const Menu = styled.ul`
     grid-area: menu;
-    background: green;
+    padding-top: 64px;
+    text-align: center;
+    background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
+
+    > li {
+        margin-bottom: 24px;
+    }
 `;
 
 export const Search = styled.div`
