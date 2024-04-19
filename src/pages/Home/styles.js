@@ -54,6 +54,14 @@ export const Content = styled.div`
 `;
 
 export const NewNote = styled.button`
+    border: none;
+    display: flex;
     grid-area: newnote;
-    background: yellow;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.COLORS.ORANGE};
+    
+    svg {
+        margin-right: 8px;
+    }
 `;
