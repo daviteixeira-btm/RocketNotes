@@ -4,6 +4,9 @@ import { Textarea } from "../../Components/Textarea";
 
 import { Container, Form } from "./styles";
 
+import { NoteItem } from "../../Components/NoteItem";
+import { Section } from "../../Components/Section";
+
 export function New(){
     return (
         <Container>
@@ -21,6 +24,11 @@ export function New(){
                     />
 
                     <Textarea placeholder="Observações" />
+
+                    <Section title="Links úteis">
+                        <NoteItem value="https://rocketseat.com.br" />
+                        <NoteItem isNew placeholder="Novo link" />
+                    </Section>
                 </Form>
             </main>
         </Container>
