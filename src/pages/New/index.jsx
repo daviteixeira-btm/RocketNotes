@@ -8,6 +8,8 @@ import { NoteItem } from "../../Components/NoteItem";
 import { Section } from "../../Components/Section";
 import { Button } from "../../Components/Button";
 
+import { Link } from "react-router-dom";
+
 export function New(){
     return (
         <Container>
@@ -17,7 +19,7 @@ export function New(){
                 <Form>
                     <header>
                         <h1>Criar nota</h1>
-                        <a href="/">voltar</a>
+                        <Link to="/">voltar</Link>
                     </header>
 
                     <Input
