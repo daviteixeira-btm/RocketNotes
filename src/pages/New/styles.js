@@ -8,6 +8,17 @@ export const Container = styled.div`
     grid-template-areas:
     "header"
     "content";
+
+    > main {
+        overflow-y: auto; 
+        grid-area: content;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 `;
 
 export const Form = styled.form`

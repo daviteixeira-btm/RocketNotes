@@ -6,6 +6,7 @@ import { Container, Form } from "./styles";
 
 import { NoteItem } from "../../Components/NoteItem";
 import { Section } from "../../Components/Section";
+import { Button } from "../../Components/Button";
 
 export function New(){
     return (
@@ -29,6 +30,15 @@ export function New(){
                         <NoteItem value="https://rocketseat.com.br" />
                         <NoteItem isNew placeholder="Novo link" />
                     </Section>
+
+                    <Section title="Marcadores">
+                        <div className="tags">
+                            <NoteItem value="React" />
+                            <NoteItem isNew placeholder="Novo tag" />
+                        </div>
+                    </Section>
+
+                    <Button title="Salvar" />
                 </Form>
             </main>
         </Container>
