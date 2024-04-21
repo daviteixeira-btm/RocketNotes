@@ -16,12 +16,24 @@ RocketNotes é uma aplicação front-end desenvolvida para ajudar na organizaç�
 
 Durante o desenvolvimento deste projeto, explorei o poderoso ecossistema do ReactJS, aprendi a utilizar o Vite como bundler, estruturar arquivos e pastas de forma organizada, estilizar componentes com Styled-Components e implementar navegação com React Router. O resultado é uma aplicação fluida e responsiva, pronta para atender às necessidades de gerenciamento de notas de estudo.
 
-Tecnologias Utilizadas:
-
 Esse é o <a href="https://www.figma.com/file/hbBzycZDR4WGSVWyK5aOqV/RocketNotes/duplicate?type=design&node-id=0-1&mode=design">Link</a> para o design do projeto no Figma.
 
 <div align="center">
-  <img src="./assets/onde-o-node-pode-ser-utilizado.png" />
+  <table>
+    <tr>
+      <th colspan='3'>Páginas</th>
+    </tr>
+    <tr>
+      <td><img src="./src/assets/01.png" /></td>
+      <td><img src="./src/assets/02.png" /></td>
+      <td><img src="./src/assets/03.png" /></td>
+    </tr>
+    <tr>
+      <td><img src="./src/assets/04.png" /></td>
+      <td><img src="./src/assets/05.png" /></td>
+      <td><img src="./src/assets/06.png" /></td>
+    </tr>
+  </table>
 </div>
 
 <a id="Dependencias"></a>
