@@ -8,7 +8,13 @@ import { Button } from "../../Components/Button";
 
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../../hooks/auth";
+
 export function SingIn(){
+
+    // Aqui podemos usar o nosso hook de contexto 
+    const data = useAuth();
+
     return (
         <Container>
             <Form>
