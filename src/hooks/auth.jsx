@@ -2,7 +2,7 @@
 
 /* Usamos o contexto para centralizar os dados do usuário em um 
 único lugar para poder ser buscado em toda a aplicação */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 import { api } from "../services/api";
 
@@ -23,6 +23,11 @@ function AuthProvider({ children }){
             
             // Desestruturamos o user e o token, pois só queremos essas informações da resposta da requisição
             const { user, token } = response.data;
+
+            /* Pegando as informações do usuário e armazenando no storage do navegador 
+                - Usamos o 'JSON.stringify' para transformar o objeto em texto */
+            localStorage.setItem("@rocketnotes:user", JSON.stringify(user));
+            localStorage.setItem("@rocketnotes:token", token);
             
             /* Aqui inserimos o token do usuário no cabeçalho de autenticação para que a partir do momento que 
             o usuário está logado, ele possa fazer todas as outras requisições authenticado*/
@@ -45,6 +50,24 @@ function AuthProvider({ children }){
             }
         }
     }
+
+    /* Com o 'useEffect' é possivel, quando recarregarmos a página ou fechar o navegador e abrir de novo 
+    podemos buscar as informações do usuário no 'localStorage' e preencher o estado para refletir nos lugares 
+    que estão usando o estado. */
+    useEffect(() => {
+        const user = localStorage.getItem("@rocketnotes:user");
+        const token = localStorage.getItem("@rocketnotes:token");
+
+        // Garantir que o token e o user foram informados
+        if(token && user){
+            api.defaults.headers.authorization = `Bearer ${token}`;
+
+            setData({
+                token,
+                user: JSON.parse(user) // Pegamos os dados do usuário que estava em formato de texto e transformamos para objeto
+            });
+        }
+    }, []); // O vetor vazio significa que ele só vai ser recarregado uma vez apos a renderização do componente
 
     return (
         /* Podemos compartilhar funções e o estado do usuário no nosso provider para serem acessadas 
