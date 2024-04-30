@@ -11,7 +11,7 @@ import { useAuth } from "../../hooks/auth";
 export function Profile(){
 
     // Pegamos as informações do usuário logado a partir do contexto
-    const { user } = useAuth();
+    const { user, updateProfile } = useAuth();
 
     // Os campos de 'name' e 'email' são carregados automaticamente
     const [name, setName] = useState(user.name);
@@ -20,6 +20,20 @@ export function Profile(){
     // Os campos de senha não são por motivos de segurança
     const [passwordOld, setPasswordOld] = useState();
     const [passwordNew, setPasswordNew] = useState();
+
+    // Função para lidar com o update do usuário
+    async function handleUpdate(){
+
+        // Mandamos tudo em um objeto chamado user
+        const user = {
+            name,
+            email,
+            password: passwordNew,
+            old_password: passwordOld
+        }
+
+        await updateProfile({ user });
+    }
 
     return (
         <Container>
@@ -77,7 +91,7 @@ export function Profile(){
                     onChange={event => setPasswordNew(event.target.value)}
                 />
 
-                <Button title="Salvar" />
+                <Button title="Salvar" onClick={handleUpdate} />
             </Form>
         </Container>
     )

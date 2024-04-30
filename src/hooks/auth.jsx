@@ -62,6 +62,28 @@ function AuthProvider({ children }){
         setData({});
     }
 
+    //Função de atualizar o usuário
+    async function updateProfile({ user }){
+        try {
+            
+            await api.put("/users", user);
+            // Aqui atualizamos as informações do localStorage
+            localStorage.setItem("@rocketnotes:user", JSON.stringify(user));
+
+            // Aqui atualizamos as informações no estado
+            setData({ user, token: data.token });
+
+            alert("Perfil atualizado!");
+
+        } catch (error) {
+            if(error.response){
+                alert(error.response.data.message);
+            }else{
+                alert("Não foi possível atualizar o perfil");
+            }
+        }
+    }
+
     /* Com o 'useEffect' é possivel, quando recarregarmos a página ou fechar o navegador e abrir de novo 
     podemos buscar as informações do usuário no 'localStorage' e preencher o estado para refletir nos lugares 
     que estão usando o estado. */
@@ -87,8 +109,9 @@ function AuthProvider({ children }){
         <AuthContext.Provider 
             value={{ 
                 singIn, 
+                singOut,
+                updateProfile,
                 user: data.user,
-                singOut
             }}
         >
             {children}
