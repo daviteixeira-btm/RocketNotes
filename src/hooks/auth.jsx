@@ -51,6 +51,16 @@ function AuthProvider({ children }){
         }
     }
 
+    // Função de Logout
+    function singOut(){
+        // Removemos as informações do user do localStorage
+        localStorage.removeItem("@rocketnotes:user");
+        localStorage.removeItem("@rocketnotes:token");
+
+        // Voltamos o estado para um objeto vazio
+        setData({});
+    }
+
     /* Com o 'useEffect' é possivel, quando recarregarmos a página ou fechar o navegador e abrir de novo 
     podemos buscar as informações do usuário no 'localStorage' e preencher o estado para refletir nos lugares 
     que estão usando o estado. */
@@ -72,7 +82,13 @@ function AuthProvider({ children }){
     return (
         /* Podemos compartilhar funções e o estado do usuário no nosso provider para serem acessadas 
         em outro lugar por meio do contexto */
-        <AuthContext.Provider value={{ singIn, user: data.user }}>
+        <AuthContext.Provider 
+            value={{ 
+                singIn, 
+                user: data.user,
+                singOut
+            }}
+        >
             {children}
         </AuthContext.Provider>
     )
