@@ -63,8 +63,22 @@ function AuthProvider({ children }){
     }
 
     //Função de atualizar o usuário
-    async function updateProfile({ user }){
+    async function updateProfile({ user, avatarFile }){
         try {
+
+            // Se existir um arquivo selecionado
+            if(avatarFile){
+                // Precisamos enviar ele como um arquivo
+                const fileUploadForm = new FormData();
+
+                // adicionamos um 'append' para inserir o campo avatar dentro do formulário
+                fileUploadForm.append("avatar", avatarFile);
+
+                const response = await api.patch("/user/avatar", fileUploadForm);
+                
+                // Esperamos que a resposta devolva o avatar com o conteudo atualizado
+                user.avatar = response.data.avatar;
+            }
             
             await api.put("/users", user);
             // Aqui atualizamos as informações do localStorage
