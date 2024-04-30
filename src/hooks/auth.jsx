@@ -34,7 +34,8 @@ function AuthProvider({ children }){
             
             /* Aqui inserimos um token do tipo Bearer de autorização no cabeçalho por padrão de todas as requisições 
             que o usuário vai fazer */
-            api.defaults.headers.authorization = `Bearer ${token}`;
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
 
             // Aqui, quardamos essas informações no estado
             setData({ user, token });
@@ -70,7 +71,8 @@ function AuthProvider({ children }){
 
         // Garantir que o token e o user foram informados
         if(token && user){
-            api.defaults.headers.authorization = `Bearer ${token}`;
+
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
             setData({
                 token,
