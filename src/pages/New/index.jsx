@@ -61,6 +61,20 @@ export function New(){
 
     // Função para criar uma nova nota
     async function handleNewNote(){
+
+        // Algumas validações de campos para a criação de uma nota
+        if(!title){
+            return alert("Digite o título da nota.");
+        }
+
+        if(newLink){
+            return alert("Você deixou um link no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.");
+        }
+
+        if(newTag){
+           return alert("Você deixou uma tag no campo para adicionar, mas não clicou em adicionar. Clique para adicionar ou deixe o campo vazio.");
+        }
+
         api.post("/notes", {
             title,
             description,
