@@ -9,9 +9,13 @@ import { NoteItem } from "../../Components/NoteItem";
 import { Section } from "../../Components/Section";
 import { Button } from "../../Components/Button";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 
 export function New(){
+
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("")
 
     // Aqui será o estado que guarda todos os links
     const [links, setLinks] = useState([]);
@@ -24,6 +28,8 @@ export function New(){
 
     // Onde guardamos a nova tag adicionado no momento
     const [newTag, setNewTag] = useState("");
+
+    const navigate = useNavigate();
 
     // Função que atualiza o nosso vetor de links, acessando tudo que tinha antes com o link novo
     function handleAddLink(){
@@ -53,6 +59,19 @@ export function New(){
         setTags(prevState => prevState.filter(tag => tag !== deleted));
     }
 
+    // Função para criar uma nova nota
+    async function handleNewNote(){
+        api.post("/notes", {
+            title,
+            description,
+            tags,
+            links
+        });
+
+        alert("Nota criada com sucesso!");
+        navigate("/");
+    }
+
     return (
         <Container>
             <Header />
@@ -66,9 +85,13 @@ export function New(){
 
                     <Input
                         placeholder="Título"
+                        onChange={event => setTitle(event.target.value)}
                     />
 
-                    <Textarea placeholder="Observações" />
+                    <Textarea 
+                        placeholder="Observações"
+                        onChange={event => setDescription(event.target.value)} 
+                    />
 
                     {/* Quando a função tem parametro, passamos em formato de arrow function */}
                     <Section title="Links úteis">
@@ -113,7 +136,10 @@ export function New(){
                         </div>
                     </Section>
 
-                    <Button title="Salvar" />
+                    <Button 
+                        title="Salvar"
+                        onClick={handleNewNote} 
+                    />
                 </Form>
             </main>
         </Container>
