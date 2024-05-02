@@ -27,6 +27,12 @@ export function New(){
         setNewLink("");
     }
 
+    // Função para remover o link
+    function handleRemoveLink(deleted){
+        // Retornamos uma nova lista com todos os links menos o que queremos deletar
+        setLinks(prevState => prevState.filter(link => link !== deleted));
+    }
+
     return (
         <Container>
             <Header />
@@ -44,13 +50,14 @@ export function New(){
 
                     <Textarea placeholder="Observações" />
 
+                    {/* Quando a função tem parametro, passamos em formato de arrow function */}
                     <Section title="Links úteis">
                         {
                             links.map((link, index) => (
                                 <NoteItem 
                                     key={String(index)} 
                                     value={link}
-                                    onClick={() => { }}
+                                    onClick={() => handleRemoveLink(link)}
                                 />
                             ))
                         }
