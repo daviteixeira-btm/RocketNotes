@@ -43,14 +43,19 @@ export function Profile(){
     async function handleUpdate(){
 
         // Mandamos tudo em um objeto chamado user
-        const user = {
+        const updated = {
             name,
             email,
             password: passwordNew,
             old_password: passwordOld
         }
 
-        await updateProfile({ user, avatarFile });
+        /* Como estamos mandando o user sem o avatar, para que ele não seja perdido 
+        em uma atualização de perfil quando o usuário salvar, usamos o 'Object.assing' 
+        para fazer a combinação dos valores. */
+        const userUpdated = Object.assign(user, updated);
+
+        await updateProfile({ user: userUpdated, avatarFile });
     }
 
     function handleChangeAvatar(event){
