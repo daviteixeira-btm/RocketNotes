@@ -22,7 +22,8 @@ export function Details() {
 
   // Função de voltar a página para o início
   function handleBack(){
-    navigate("/");
+    // Com o '-1' ele vai voltar para a rota anterior no eu historico de navegação
+    navigate(-1);
   }
 
   // Função para excluir uma nota
@@ -31,7 +32,7 @@ export function Details() {
 
     if(confirm){
       await api.delete(`/notes/${params.id}`);
-      navigate("/");
+      navigate(-1);
     }
   }
 
@@ -64,7 +65,7 @@ export function Details() {
             </p>
 
             {
-              data.links &&
+              data.links.length > 0 &&
               <Section title="Links úteis">
                 <Links>
                   {
@@ -81,7 +82,7 @@ export function Details() {
             }
 
             {
-              data.tags &&
+              data.tags.length > 0 &&
               <Section title="Marcadores">
                 {
                   data.tags.map(tag => (

@@ -8,8 +8,9 @@ import { Container, Form } from "./styles";
 import { NoteItem } from "../../Components/NoteItem";
 import { Section } from "../../Components/Section";
 import { Button } from "../../Components/Button";
+import { ButtonText } from "../../Components/ButtonText";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 
 export function New(){
@@ -30,6 +31,12 @@ export function New(){
     const [newTag, setNewTag] = useState("");
 
     const navigate = useNavigate();
+
+    // Função de voltar a página para o início
+    function handleBack(){
+        // Com o '-1' ele vai voltar para a rota anterior no eu historico de navegação
+        navigate(-1);
+    }
 
     // Função que atualiza o nosso vetor de links, acessando tudo que tinha antes com o link novo
     function handleAddLink(){
@@ -83,7 +90,7 @@ export function New(){
         });
 
         alert("Nota criada com sucesso!");
-        navigate("/");
+        navigate(-1);
     }
 
     return (
@@ -94,7 +101,7 @@ export function New(){
                 <Form>
                     <header>
                         <h1>Criar nota</h1>
-                        <Link to="/">voltar</Link>
+                        <ButtonText title="voltar" onClick={handleBack} />
                     </header>
 
                     <Input

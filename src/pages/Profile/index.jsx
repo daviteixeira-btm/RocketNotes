@@ -3,7 +3,7 @@ import { Container, Form, Avatar } from "./styles";
 import { FiArrowLeft, FiUser, FiMail, FiLock, FiCamera } from "react-icons/fi";
 import { Input } from "../../Components/Input";
 import { Button } from "../../Components/Button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 import avatarPlaceholder from "../../assets/avatar.png";
 
@@ -30,6 +30,14 @@ export function Profile(){
 
     // Usado para carregar a nova imagem selecionada pelo usuário
     const [avatarFile, setAvatarFile] = useState(null);
+
+    const navigate = useNavigate();
+
+    // Função de voltar a página para o início
+    function handleBack(){
+        // Com o '-1' ele vai voltar para a rota anterior no eu historico de navegação
+        navigate(-1);
+    }
 
     // Função para lidar com o update do usuário
     async function handleUpdate(){
@@ -59,9 +67,9 @@ export function Profile(){
     return (
         <Container>
             <header>
-                <Link to="/">
+                <button type="button" onClick={handleBack}>
                     <FiArrowLeft />
-                </Link>
+                </button>
             </header>
 
             <Form>
