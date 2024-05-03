@@ -16,6 +16,11 @@ export function Home(){
 
     const [tagsSelected, setTagsSelected] = useState([]);
 
+    // Estado para guardar o conteúdo da pesquisa
+    const [search, setSearch] = useState("");
+
+    const [notes, setNotes] = useState([]);
+
     // Função para lidar com a seleção das tags
     function handleTagSelected(tagName){
         const alreadSelected = tagsSelected.includes(tagName);
@@ -40,6 +45,20 @@ export function Home(){
 
         fetchTags();
     }, []);
+
+    /* Esse useEffect tem duas dependências: Quando mudar o conteúdo do search ou da tagsSelected, o useEffec
+    vai executar de novo, assim a pesquisa vai recarregar com o filtro que o usúario está aplicando naquele 
+    momento e o search conforme ele for digitando, refletindo na interface. */
+    useEffect(() => {
+        // Função de buscar pelas notas
+        async function fetchNotes(){
+            // Enviamos a requisição atraves de uma query
+            const response = await api.get(`/notes?title=${search}&tags=${tagsSelected}`);
+            setNotes(response.data);
+        }
+
+        fetchNotes();
+    }, [tagsSelected, search]);
 
     return (
         <Container>
@@ -73,20 +92,23 @@ export function Home(){
             </Menu>
 
             <Search>
-                <Input placeholder="Pesquisar pelo título" icon={FiSearch} />
+                <Input 
+                    icon={FiSearch}
+                    placeholder="Pesquisar pelo título" 
+                    onChange={event => setSearch(event.target.value)} 
+                />
             </Search>
 
             <Content>
                 <Section title="Minhas notas">
-                    <Note 
-                        data={{ 
-                            title: "React", 
-                            tags: [
-                                { id: "1", name: "react"},
-                                { id: "2", name: "rocketseat"},
-                            ]
-                        }} 
-                    />
+                    {
+                        notes.map(note => (
+                            <Note
+                                data={note}
+                                key={String(note.id)}
+                            />
+                        ))
+                    }
                 </Section>
             </Content>
 
