@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { FiPlus, FiSearch } from "react-icons/fi";
 
+import { useNavigate } from "react-router-dom";
+
 import { Container, Brand, Menu, Search, Content, NewNote } from "./styles";
 
 import { Header } from "../../Components/Header";
@@ -21,6 +23,8 @@ export function Home(){
 
     const [notes, setNotes] = useState([]);
 
+    const navigate = useNavigate();
+
     // Função para lidar com a seleção das tags
     function handleTagSelected(tagName){
 
@@ -37,6 +41,12 @@ export function Home(){
             // Guardamos as tags selecionadas
             setTagsSelected(prevState => [...prevState, tagName]);
         }
+    }
+
+    function handleDetails(id){
+        // Esperamos o id da nota selecionada para levar para a página da nota especifica
+        navigate(`/details/${id}`);
+
     }
 
     useEffect(() => {
@@ -111,6 +121,7 @@ export function Home(){
                             <Note
                                 data={note}
                                 key={String(note.id)}
+                                onClick={() => handleDetails(note.id)}
                             />
                         ))
                     }
