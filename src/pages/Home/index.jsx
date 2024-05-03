@@ -14,6 +14,21 @@ export function Home(){
 
     const [tags, setTags] = useState([]);
 
+    const [tagsSelected, setTagsSelected] = useState([]);
+
+    // Função para lidar com a seleção das tags
+    function handleTagSelected(tagName){
+        const alreadSelected = tagsSelected.includes(tagName);
+
+        if(alreadSelected){
+            const filteredTags = tagsSelected.filter(tag => tag !== tagName);
+            setTagsSelected(filteredTags);
+        }else{
+            // Guardamos as tags selecionadas
+            setTagsSelected(prevState => [...prevState, tagName]);
+        }
+    }
+
     useEffect(() => {
         // Funcionalidade de carregar as tags que servem de filtro de pesquisa
         async function fetchTags(){
@@ -35,10 +50,24 @@ export function Home(){
             <Header />
 
             <Menu>
-                <li><ButtonText title="Todos" isactive /></li>
+                <li>
+                    <ButtonText 
+                        title="Todos" 
+                        $isactive={tagsSelected.length === 0}
+                        onClick={() => handleTagSelected("all")} 
+                    />
+                </li>
                 {
                     tags && tags.map(tag => (
-                        <li key={String(tag.id)}><ButtonText title={tag.name} /></li>
+                        <li 
+                            key={String(tag.id)}
+                        >
+                            <ButtonText 
+                                title={tag.name} 
+                                $isactive={tagsSelected.includes(tag.name)}
+                                onClick={() => handleTagSelected(tag.name)} 
+                            />
+                        </li>
                     ))
                 }
             </Menu>
