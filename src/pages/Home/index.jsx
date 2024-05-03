@@ -23,6 +23,11 @@ export function Home(){
 
     // Função para lidar com a seleção das tags
     function handleTagSelected(tagName){
+
+        if(tagName === "all"){
+            return setTagsSelected([]);
+        }
+
         const alreadSelected = tagsSelected.includes(tagName);
 
         if(alreadSelected){
