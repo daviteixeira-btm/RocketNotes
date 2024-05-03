@@ -1,45 +1,90 @@
-import { Container, Links, Content } from "./styles"
-import { Header } from "../../Components/Header"
-import { Button } from "../../Components/Button"
-import { Section } from "../../Components/Section"
-import { Tag } from "../../Components/Tag"
-import { ButtonText } from "../../Components/ButtonText"
+import { Container, Links, Content } from "./styles";
+
+import { useState, useEffect } from "react";
+// Serve para buscar os parâmetros que existem em uma rota
+import { useParams, useNavigate } from "react-router-dom";
+
+import { Header } from "../../Components/Header";
+import { Button } from "../../Components/Button";
+import { Section } from "../../Components/Section";
+import { Tag } from "../../Components/Tag";
+import { ButtonText } from "../../Components/ButtonText";
+
+import { api } from "../../services/api";
 
 export function Details() {
+
+  const [data, setData] = useState(null);
+
+  const params = useParams();
+
+  const navigate = useNavigate();
+
+  // Função de voltar a página para o início
+  function handleBack(){
+    navigate("/");
+  }
+
+  // Usamos para buscar as informações da nota
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`);
+      setData(response.data);
+    }
+
+    fetchNote();
+  }, []);
+
   return (
     <Container>
       <Header />
 
-      <main>
-        <Content>
-          <ButtonText title="Excluir nota" />
+      {
+        data &&
+        <main>
+          <Content>
+            <ButtonText title="Excluir nota" />
 
-          <h1>
-            Introdução ao React
-          </h1>
+            <h1>
+              {data.title}
+            </h1>
 
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius cum molestiae 
-            sunt totam eligendi repudiandae eos debitis repellendus tempora. Exercitationem 
-            sunt modi voluptatum. Asperiores ea delectus cumque dicta deleniti aut.
-          </p>
+            <p>
+              {data.description}
+            </p>
 
-          <Section title="Links úteis">
-            <Links>
-              <li><a href="#">Link 1</a></li>
-              <li><a href="#">Link 2</a></li>
-              <li><a href="#">Link 3</a></li>
-            </Links>
-          </Section>
+            {
+              data.links &&
+              <Section title="Links úteis">
+                <Links>
+                  {
+                    data.links.map(link => (
+                      <li key={String(link.id)}>
+                        <a href={link.url} target="_blank">
+                          {link.url}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </Links>
+              </Section>
+            }
 
-          <Section title="Marcadores">
-            <Tag title="express" />
-            <Tag title="nodejs" />
-          </Section>
+            {
+              data.tags &&
+              <Section title="Marcadores">
+                {
+                  data.tags.map(tag => (
+                    <Tag key={String(tag.id)} title={tag.name} />
+                  ))
+                }
+              </Section>
+            }
 
-          <Button title="Voltar" />
-        </Content>
-      </main>
+            <Button onClick={handleBack} title="Voltar" />
+          </Content>
+        </main>
+      }
     </Container>
   )
 }
