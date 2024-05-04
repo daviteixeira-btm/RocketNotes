@@ -7,5 +7,5 @@ import axios from "axios";
 
 export const api = axios.create({
     // Aqui, podemos incluir a parte do endereço da API que se repete em todas as requisições
-    baseURL: "http://localhost:3333"
+    baseURL: "https://rocketnotes-api-d0g2.onrender.com"
 });
