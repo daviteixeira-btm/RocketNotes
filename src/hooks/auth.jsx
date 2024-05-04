@@ -74,7 +74,7 @@ function AuthProvider({ children }){
                 // adicionamos um 'append' para inserir o campo avatar dentro do formulário
                 fileUploadForm.append("avatar", avatarFile);
 
-                const response = await api.patch("/user/avatar", fileUploadForm);
+                const response = await api.patch("/users/avatar", fileUploadForm);
                 
                 // Esperamos que a resposta devolva o avatar com o conteudo atualizado
                 user.avatar = response.data.avatar;
